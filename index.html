@@ -4,44 +4,47 @@
 <title>Driver Profit Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#eef0f3;--card:#fff;--ink:#16202e;--mut:#6b7686;--line:#dde2e8;--acc:#f26a1b;--accf:#fff;--ok:#12805c;--warn:#b7791f;--bad:#c53030;--okb:#dcf3ea;--warnb:#fbf0d4;--badb:#fbe0e0;
+:root{--bg:#fbf6f1;--card:#fff;--ink:#3d3441;--mut:#9b8fa0;--line:#f0e6df;--acc:#ff8f6b;--accf:#fff;--ok:#2f9e7e;--warn:#c98a1b;--bad:#d9566b;--okb:#e0f5ee;--warnb:#fdf1d8;--badb:#fde4e8;--h1:#ffe3d3;--h2:#ffd1e1;--sh:0 6px 20px rgba(120,80,90,.08);
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151d;--card:#1a212c;--ink:#eef1f5;--mut:#93a0b2;--line:#2a3340;--ok:#4cc99a;--warn:#e8b64e;--bad:#f27474;--okb:#14352b;--warnb:#3a2f14;--badb:#3b1c1c}}
-:root[data-theme="dark"]{--bg:#10151d;--card:#1a212c;--ink:#eef1f5;--mut:#93a0b2;--line:#2a3340;--ok:#4cc99a;--warn:#e8b64e;--bad:#f27474;--okb:#14352b;--warnb:#3a2f14;--badb:#3b1c1c}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1e1a24;--card:#2a2531;--ink:#f4eef7;--mut:#a99eb4;--line:#3b3444;--acc:#ff9d7a;--accf:#2b1a14;--ok:#6fd3b3;--warn:#efc062;--bad:#ff8fa1;--okb:#1d3a33;--warnb:#3d3319;--badb:#44222b;--h1:#3a2f4a;--h2:#4a2f3d;--sh:0 6px 20px rgba(0,0,0,.3)}}
+:root[data-theme="dark"]{--bg:#1e1a24;--card:#2a2531;--ink:#f4eef7;--mut:#a99eb4;--line:#3b3444;--acc:#ff9d7a;--accf:#2b1a14;--ok:#6fd3b3;--warn:#efc062;--bad:#ff8fa1;--okb:#1d3a33;--warnb:#3d3319;--badb:#44222b;--h1:#3a2f4a;--h2:#4a2f3d;--sh:0 6px 20px rgba(0,0,0,.3)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans Thai',system-ui,sans-serif;font-size:16px}
-main{max-width:640px;margin:0 auto;padding:16px 14px 110px}
-h1{font-size:22px;margin:4px 0 12px;font-weight:800}h2{font-size:15px;margin:18px 0 8px;color:var(--mut);font-weight:600}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
-.hero{background:var(--ink);color:var(--bg);border:0;border-radius:20px;padding:18px}
-.hero .big{font-size:46px;font-weight:800;line-height:1.1}.hero small{opacity:.7}
-.seg{display:flex;gap:6px;flex-wrap:wrap}.seg button,.chip{flex:1;min-width:0;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:11px 8px;font:inherit;font-weight:600;cursor:pointer}
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--bg);background-image:radial-gradient(700px 380px at 95% -5%,var(--h2),transparent 65%),radial-gradient(600px 360px at -10% 8%,var(--h1),transparent 65%);background-attachment:fixed;color:var(--ink);font-family:'Noto Sans Thai',system-ui,sans-serif;font-size:16px}
+main{max-width:640px;margin:0 auto;padding:18px 14px 120px}
+h1{font-size:23px;margin:6px 0 14px;font-weight:800}h2{font-size:14px;margin:20px 0 8px;color:var(--mut);font-weight:600;letter-spacing:.2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin-bottom:12px;box-shadow:var(--sh)}
+.hero{background:linear-gradient(135deg,var(--h1),var(--h2));color:var(--ink);border:0;border-radius:26px;padding:20px}
+.hero .big{font-size:42px;font-weight:800;line-height:1.15}.hero small{opacity:.75}
+.seg{display:flex;gap:8px}.seg button,.chip{flex:1;min-width:0;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:11px 6px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap}
 .seg .on{border-color:var(--acc);background:var(--acc);color:var(--accf)}
-.hero .seg button{background:transparent;color:inherit;border-color:#ffffff40}.hero .seg .on{background:var(--acc);border-color:var(--acc)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-.stat b{display:block;font-size:20px}.stat span{font-size:13px;color:var(--mut)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 14px;box-shadow:var(--sh)}
+.stat b{display:block;font-size:20px;margin-top:2px}.stat span{font-size:13px;color:var(--mut)}
 .pos{color:var(--ok)}.neg{color:var(--bad)}.warn{color:var(--warn)}
-.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:var(--ok)}
-.row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}
+.bar{height:12px;background:var(--line);border-radius:8px;overflow:hidden;margin:10px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--ok));border-radius:8px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px dashed var(--line)}.row:last-child{border:0}
 .row .l{color:var(--mut)}.row.t{font-weight:800}
-.item{display:flex;justify-content:space-between;gap:10px;padding:12px;cursor:pointer}.item small{color:var(--mut);display:block}
-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
-nav button{background:none;border:0;color:var(--mut);font:inherit;font-size:12px;padding:6px 10px;cursor:pointer;flex:1}nav button.on{color:var(--acc);font-weight:800}nav .plus{background:var(--acc);color:#fff;border-radius:50%;width:54px;height:54px;flex:none;font-size:30px;margin-top:-26px;box-shadow:0 4px 14px #0004}
-.fab{width:100%;background:var(--acc);color:#fff;border:0;border-radius:16px;padding:17px;font:inherit;font-size:19px;font-weight:800;margin:12px 0;cursor:pointer}
+.item{display:flex;justify-content:space-between;gap:10px;padding:14px 16px;cursor:pointer;border-bottom:1px dashed var(--line)}.item:last-child{border:0}.item small{color:var(--mut);display:block;margin-top:2px}
+nav{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));max-width:616px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:28px;box-shadow:0 10px 30px rgba(90,60,80,.16);display:flex;justify-content:space-around;align-items:center;padding:6px 4px;z-index:5}
+nav button{background:none;border:0;color:var(--mut);font:inherit;font-size:12px;padding:6px 8px;cursor:pointer;flex:1}nav button.on{color:var(--acc);font-weight:800}
+nav .plus{background:var(--acc);color:var(--accf);border-radius:50%;width:54px;height:54px;flex:none;font-size:30px;margin-top:-30px;box-shadow:0 8px 18px rgba(255,143,107,.45)}
+.fab{width:100%;background:var(--acc);color:var(--accf);border:0;border-radius:20px;padding:17px;font:inherit;font-size:19px;font-weight:800;margin:14px 0;cursor:pointer;box-shadow:0 8px 18px rgba(255,143,107,.35)}
 label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}
-input,select,textarea{width:100%;font:inherit;font-size:17px;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-#sheet{position:fixed;inset:0;background:var(--bg);z-index:10;overflow:auto;display:none;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 40px}
+input,select,textarea{width:100%;font:inherit;font-size:17px;padding:12px 14px;border:1.5px solid var(--line);border-radius:16px;background:var(--bg);color:var(--ink)}
+input:focus,select:focus{outline:0;border-color:var(--acc)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#sheet{position:fixed;inset:0;background-color:var(--bg);background-image:radial-gradient(700px 380px at 95% -5%,var(--h2),transparent 65%);z-index:10;overflow:auto;display:none;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 40px}
 #sheet>div{max-width:640px;margin:0 auto}
 .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-weight:700;font-size:14px}
 .b-ok{background:var(--okb);color:var(--ok)}.b-warn{background:var(--warnb);color:var(--warn)}.b-bad{background:var(--badb);color:var(--bad)}
-.ghost{background:none;border:1.5px solid var(--line);color:var(--ink);border-radius:12px;padding:12px;font:inherit;width:100%;cursor:pointer}
-.danger{color:var(--bad)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:7px 4px;text-align:right;border-bottom:1px solid var(--line)}th:first-child,td:first-child{text-align:left}th{color:var(--mut);font-weight:600}
-.empty{text-align:center;color:var(--mut);padding:24px}
+.ghost{background:var(--card);border:1.5px solid var(--line);color:var(--ink);border-radius:16px;padding:12px;font:inherit;width:100%;cursor:pointer}
+.danger{color:var(--bad)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px 4px;text-align:right;border-bottom:1px dashed var(--line)}th:first-child,td:first-child{text-align:left}th{color:var(--mut);font-weight:600}
+.empty{text-align:center;color:var(--mut);padding:26px}
 </style></head><body>
 <main id="app"></main><div id="sheet"><div id="sheetc"></div></div>
 <div id="sync" onclick="syncClick()" style="cursor:pointer;padding:4px 8px;position:fixed;top:calc(6px + env(safe-area-inset-top,0px));right:12px;z-index:4;font-size:12px;color:var(--mut)"></div><nav id="nav"></nav>
 <script>
+(()=>{try{const t=localStorage.getItem('lm_theme');if(t&&t!=='auto')document.documentElement.dataset.theme=t}catch(e){}})();
 /* ===== Calculation Engine (pure, testable) ===== */
 const Calc={
  commission:(g,r)=>g*r/100,
@@ -72,13 +75,13 @@ function seed(){
   for(let i=0;i<n;i++){const ty=Math.floor(rnd()*3),km=Math.round(6+rnd()*28),g=Math.round((60+km*(7+ty*2.5)+rnd()*60)/5)*5,dp=Math.round(2+rnd()*8),dr=Math.round(rnd()*10),dur=Math.round((km+dp+dr)*2.4+18),a=areas[Math.floor(rnd()*6)];
    const f=m=>String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
    o.push({id:uid(),date:day,start:f(t),end:f(t+dur),oid:'LM'+Math.floor(1000+rnd()*8999),type:types[ty],gross:g,rate:rates[Math.floor(rnd()*5)],km:km+dp+dr,dPick:dp,dDel:km,dRet:dr,toll:rnd()>.8?50:0,parking:0,other:0,pickup:a,drop:areas[Math.floor(rnd()*6)],area:a,notes:''});t+=dur+20+Math.floor(rnd()*70)}}
- return{fuel:[[-21,125000,50],[-14,125420,52],[-7,125850,53],[-1,126270,52]].map(([d,odo,l])=>({id:uid(),date:addDays(ymd(new Date()),d),odo,liters:l,price:40.5,total:Math.round(l*40.5*100)/100,station:'PTT',notes:''})),orders:o,expenses:[{id:uid(),date:ymd(new Date()),cat:'ล้างรถ',amount:80,count:true,notes:''},{id:uid(),date:ymd(new Date()),cat:'อาหาร',amount:60,count:false,notes:''}],
+ return{fuel:[[-21,125000,50],[-14,125420,52],[-7,125850,53],[-1,126270,52]].map(([d,odo,l])=>({id:uid(),date:addDays(ymd(new Date()),d),odo,liters:l,price:40.5,total:Math.round(l*40.5*100)/100,station:'PTT Station',notes:''})),orders:o,expenses:[{id:uid(),date:ymd(new Date()),cat:'ล้างรถ',amount:80,count:true,notes:''},{id:uid(),date:ymd(new Date()),cat:'อาหาร',amount:60,count:false,notes:''}],
  s:{brand:'Toyota',model:'Hilux Vigo',year:2012,plate:'1กข 1234',fuelType:'ดีเซล',kmpl:10,fuelPrice:40,carValue:600000,lifeKm:300000,useDep:true,sticker:'ยังไม่ได้ติด',goalDayP:1000,goalWeekP:6000,goalMonthP:25000,thG:8,thY:4,types:'ประหยัด,ปกติ,เร่งด่วน',rates:'25,17,7',lastRate:25,lastType:'ปกติ'}}}
 let D;try{D=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!D||!D.orders)D=seed();
 if(!D.fuel)D.fuel=[];
 const saveLocal=()=>{try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}};
 /* ===== Google Drive sync (data lives in your own Drive; local copy = offline cache) ===== */
-const GOOGLE_CLIENT_ID='1093198523049-681os78pv61slfdkoaionpqa6eu2h8na.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID='PASTE_YOUR_CLIENT_ID.apps.googleusercontent.com';
 const FNAME='LalamoveProfit-data.json',SCOPE='https://www.googleapis.com/auth/drive.file';
 let TOK=null,tokenClient=null,fileId=null,pend=null,dirty=false,connected=false;
 const setSync=t=>{const e=document.getElementById('sync');if(e)e.textContent={off:'📱 ยังไม่เชื่อม Drive · แตะเพื่อเชื่อม',busy:'☁️ กำลังซิงค์…',ok:'☁️ Drive ซิงค์แล้ว',err:'⚠️ ซิงค์ไม่สำเร็จ · แตะลองใหม่'}[t]};
@@ -169,9 +172,9 @@ function openOrder(id){
  <label>Commission</label><div class="seg" id="frate"></div><input id="fcustom" type="number" inputmode="decimal" placeholder="% กำหนดเอง" style="margin-top:6px;display:${F.custom?'block':'none'}" value="${F.custom?F.rate:''}" oninput="F.rate=+this.value;upd()">
  <label>ระยะทางจริงที่วิ่ง (กม.) · ไม่รู้รายละเอียดกรอกแค่รวมได้</label><div class="two" style="grid-template-columns:1fr 1fr 1fr"><div><label>ไปรับ</label><input id="fdp" type="number" inputmode="decimal" min="0" value="${F.dPick||''}" oninput="sumKm()"></div><div><label>ส่งของ</label><input id="fdd" type="number" inputmode="decimal" min="0" value="${F.dDel||''}" oninput="sumKm()"></div><div><label>หลังจบงาน</label><input id="fdr" type="number" inputmode="decimal" min="0" value="${F.dRet||''}" oninput="sumKm()"></div></div><label>ระยะทางรวมจริง</label><input id="fkm" type="number" inputmode="decimal" min="0" value="${F.km}" oninput="F.km=+this.value;upd()">
  <div class="card" id="prev" style="margin-top:14px"></div>
- <div class="two"><div><label>เริ่ม</label><input id="fstart" type="time" value="${F.start}"></div><div><label>สิ้นสุด</label><input id="fend" type="time" value="${F.end}"></div></div>
+ <div class="two"><div><label>เริ่ม</label><input id="fstart" type="text" inputmode="numeric" maxlength="5" placeholder="HH:MM (24 ชม.)" value="${F.start}" oninput="tin(this)" onblur="tfix(this)"></div><div><label>สิ้นสุด</label><input id="fend" type="text" inputmode="numeric" maxlength="5" placeholder="HH:MM (24 ชม.)" value="${F.end}" oninput="tin(this)" onblur="tfix(this)"></div></div>
  <details style="margin-top:8px"><summary style="padding:10px 0;cursor:pointer;color:var(--mut)">ข้อมูลเพิ่มเติม (ไม่บังคับ)</summary>
- <div class="two"><div><label>วันที่</label><input id="fdate" type="date" value="${F.date}"></div><div><label>Order ID</label><input id="foid" value="${F.oid}"></div>
+ <div class="two"><div><label>วันที่</label>${dinp('fdate',F.date)}</div><div><label>Order ID</label><input id="foid" value="${F.oid}"></div>
  <div><label>ทางด่วน</label><input id="ftoll" type="number" inputmode="decimal" min="0" value="${F.toll||''}" oninput="upd()"></div><div><label>ค่าจอด</label><input id="fpark" type="number" inputmode="decimal" min="0" value="${F.parking||''}" oninput="upd()"></div>
  <div><label>ค่าใช้จ่ายอื่น</label><input id="foth" type="number" inputmode="decimal" min="0" value="${F.other||''}" oninput="upd()"></div><div><label>เขต/พื้นที่</label><input id="farea" value="${F.area}"></div>
  <div><label>จุดรับ</label><input id="fpick" value="${F.pickup}"></div><div><label>จุดส่ง</label><input id="fdrop" value="${F.drop}"></div></div>
@@ -189,10 +192,10 @@ function upd(){const o=cur(),c=Calc.order(o,S()),h=o.start&&o.end?Calc.hours(o):
  $prev.innerHTML=r('Commission',`-${f0(c.comm)}`)+r('รายได้หลังหัก',f0(c.net))+r('น้ำมัน',`-${f1(c.fuel)}`)+r('ทางด่วน/จอด/อื่นๆ',`-${f0(c.extra)}`)+r('ค่าเสื่อม',`-${f1(c.dep)}`)+(o.dPick||o.dRet?r('รถเปล่า (ไปรับ+กลับ)',f1(o.dPick+o.dRet)+' กม. ('+f0((o.dPick+o.dRet)/(o.km||1)*100)+'%)'):'')+r('กำไรสุทธิ',`<span class="${cl(c.true)}">${f0(c.true)} ฿</span>`,'t')+`<div style="margin-top:6px"><span class="badge b-${v}">${lb}</span> <small style="color:var(--mut)">${f1(pk)} ฿/กม.${h?' · '+f0(c.true/h)+' ฿/ชม.':''}</small></div>`}
 function saveOrder(){
  const o=cur(),err=m=>{$err.textContent=m;return};
- if(!(o.gross>0))return err('กรอกราคางาน');if(F.rate<0||F.rate>100||isNaN(F.rate))return err('Commission ต้องอยู่ระหว่าง 0–100%');
+ const tv=t=>!t||/^([01]\d|2[0-3]):[0-5]\d$/.test(t);if(!tv(o.start)||!tv(o.end))return err('เวลาใช้รูปแบบ 24 ชม. เช่น 08:30 หรือ 18:45');if(rd('fdate')===null)return err('วันที่ไม่ถูกต้อง (วว/ดด/ปปปป)');if(!(o.gross>0))return err('กรอกราคางาน');if(F.rate<0||F.rate>100||isNaN(F.rate))return err('Commission ต้องอยู่ระหว่าง 0–100%');
  if(o.km<=0)return err('กรอกระยะทาง (ต้องมากกว่า 0)');if(o.dPick<0||o.dDel<0||o.dRet<0)return err('ระยะทางห้ามติดลบ');if(o.dPick+o.dDel+o.dRet>0&&Math.abs(o.dPick+o.dDel+o.dRet-o.km)>0.05)return err('ระยะทางรวมไม่ตรงกับ ไปรับ+ส่ง+หลังจบงาน');if(o.start&&o.end&&o.start>o.end)return err('เวลาเริ่มต้องไม่หลังเวลาสิ้นสุด');
  if(o.toll<0||o.parking<0||o.other<0)return err('ค่าใช้จ่ายห้ามติดลบ');
- const rec={...o,id:F.id||uid(),date:$fdate.value||today(),oid:$foid.value,type:F.type,rate:+F.rate,pickup:$fpick.value,drop:$fdrop.value,area:$farea.value,notes:$fnotes.value};
+ const rec={...o,id:F.id||uid(),date:rd('fdate'),oid:$foid.value,type:F.type,rate:+F.rate,pickup:$fpick.value,drop:$fdrop.value,area:$farea.value,notes:$fnotes.value};
  if(F.id)D.orders=D.orders.map(x=>x.id===F.id?rec:x);else D.orders.push(rec);
  D.s.lastRate=rec.rate;D.s.lastType=rec.type;save();closeSheet()}
 function delOrder(id){if(confirm('ลบงานนี้?')){D.orders=D.orders.filter(x=>x.id!==id);save();closeSheet()}}
@@ -201,11 +204,11 @@ function openExp(id){const e=D.expenses.find(x=>x.id===id)||{date:today(),cat:'�
  const cats=['น้ำมัน','น้ำมันเครื่อง','ยาง','ซ่อม','ล้างรถ','ประกัน','ภาษี','พ.ร.บ.','ค่าทางด่วน','ค่าจอด','โทรศัพท์','Internet','อาหาร','เครื่องดื่ม','อื่นๆ'];
  openSheet(`<div class="row"><button class="ghost" style="width:auto" onclick="closeSheet()">‹ กลับ</button><b>${id?'แก้ไข':'เพิ่ม'}ค่าใช้จ่าย</b><span></span></div>
  <label>หมวด</label><select id="ecat">${cats.map(c=>`<option ${c===e.cat?'selected':''}>${c}</option>`).join('')}</select>
- <label>จำนวนเงิน (฿)</label><input id="eamt" type="number" inputmode="decimal" min="0" value="${e.amount}"><label>วันที่</label><input id="edate" type="date" value="${e.date}">
+ <label>จำนวนเงิน (฿)</label><input id="eamt" type="number" inputmode="decimal" min="0" value="${e.amount}"><label>วันที่</label>${dinp('edate',e.date)}
  <label style="display:flex;gap:10px;align-items:center;color:var(--ink)"><input id="ecount" type="checkbox" style="width:24px;height:24px" ${e.count?'checked':''}>นับเป็นต้นทุนในการคำนวณกำไร</label>
  <div id="err" class="neg"></div><button class="fab" onclick="saveExp('${id||''}')">บันทึก</button>${id?`<button class="ghost danger" onclick="D.expenses=D.expenses.filter(x=>x.id!=='${id}');save();closeSheet()">ลบ</button>`:''}`)}
-function saveExp(id){const a=+$eamt.value;if(!(a>0)){$err.textContent='กรอกจำนวนเงินมากกว่า 0';return}
- const r={id:id||uid(),cat:$ecat.value,amount:a,date:$edate.value||today(),count:$ecount.checked,notes:''};D.expenses=id?D.expenses.map(x=>x.id===id?r:x):[...D.expenses,r];save();closeSheet()}
+function saveExp(id){const a=+$eamt.value;if(!(a>0)){$err.textContent='กรอกจำนวนเงินมากกว่า 0';return}if(rd('edate')===null){$err.textContent='วันที่ไม่ถูกต้อง (วว/ดด/ปปปป)';return}
+ const r={id:id||uid(),cat:$ecat.value,amount:a,date:rd('edate'),count:$ecount.checked,notes:''};D.expenses=id?D.expenses.map(x=>x.id===id?r:x):[...D.expenses,r];save();closeSheet()}
 /* ----- Fuel log ----- */
 function fuelPage(sw){const st=Calc.fuelStats(D.fuel),l=D.fuel.slice().sort((a,b)=>b.odo-a.odo);
  return`<h1>รายการ</h1>${sw}<button class="fab" style="margin-top:0" onclick="openFuel()">+ เติมน้ำมัน</button>
@@ -216,14 +219,14 @@ function fuelPage(sw){const st=Calc.fuelStats(D.fuel),l=D.fuel.slice().sort((a,b
 function useFuel(k,p){if(!confirm('ปรับ กม./ลิตร และราคาน้ำมันในการตั้งค่า? ผลคำนวณกำไรของงานทั้งหมดจะเปลี่ยนตาม'))return;D.s.kmpl=Math.round(k*100)/100;D.s.fuelPrice=Math.round(p*100)/100;save();render()}
 function openFuel(id){const e=D.fuel.find(x=>x.id===id)||{date:today(),odo:Math.max(0,...D.fuel.map(x=>x.odo)),liters:'',price:D.s.fuelPrice,total:'',station:'',notes:''};
  openSheet(`<div class="row"><button class="ghost" style="width:auto" onclick="closeSheet()">‹ กลับ</button><b>${id?'แก้ไข':'เพิ่ม'}การเติมน้ำมัน</b><span></span></div>
- <div class="two"><div><label>วันที่</label><input id="gdate" type="date" value="${e.date}"></div><div><label>เลขไมล์ (กม.)</label><input id="godo" type="number" inputmode="decimal" min="0" value="${e.odo||''}"></div>
+ <div class="two"><div><label>วันที่</label>${dinp('gdate',e.date)}</div><div><label>เลขไมล์ (กม.)</label><input id="godo" type="number" inputmode="decimal" min="0" value="${e.odo||''}"></div>
  <div><label>จำนวนลิตร</label><input id="gl" type="number" inputmode="decimal" min="0" step="any" value="${e.liters}" oninput="fcalc('l')"></div><div><label>ราคา ฿/ลิตร</label><input id="gp" type="number" inputmode="decimal" min="0" step="any" value="${e.price}" oninput="fcalc('p')"></div></div>
  <label>จำนวนเงิน (฿) · กรอกยอดรวมแทนราคา/ลิตรก็ได้</label><input id="gt" type="number" inputmode="decimal" min="0" step="any" value="${e.total}" oninput="fcalc('t')">
- <label>ปั๊มน้ำมัน</label><input id="gst" value="${e.station}"><label>หมายเหตุ</label><input id="gn" value="${e.notes}">
+ <label>ปั๊มน้ำมัน</label>${stSel(e.station)}<label>หมายเหตุ</label><input id="gn" value="${e.notes}">
  <small style="color:var(--mut);display:block;margin-top:8px">เติมให้เต็มถังทุกครั้ง เพื่อให้ กม./ลิตร แม่นยำ</small><div id="err" class="neg"></div><button class="fab" onclick="saveFuel('${id||''}')">บันทึก</button>${id?`<button class="ghost danger" onclick="D.fuel=D.fuel.filter(x=>x.id!=='${id}');save();closeSheet()">ลบ</button>`:''}`)}
 function fcalc(w){const l=+$gl.value||0,p=+$gp.value||0,t=+$gt.value||0;if(w==='t'){if(l>0)$gp.value=Math.round(t/l*100)/100}else if(p>0&&l>0)$gt.value=Math.round(l*p*100)/100}
-function saveFuel(id){const l=+$gl.value,p=+$gp.value,o=+$godo.value,d=$gdate.value||today(),er=m=>{$err.textContent=m};
- if(!(l>0))return er('จำนวนลิตรต้องมากกว่า 0');if(!(p>0))return er('ราคาน้ำมันต้องมากกว่า 0');if(!(o>0))return er('กรอกเลขไมล์');
+function saveFuel(id){const l=+$gl.value,p=+$gp.value,o=+$godo.value,d=rd('gdate'),er=m=>{$err.textContent=m};
+ if(d===null)return er('วันที่ไม่ถูกต้อง (วว/ดด/ปปปป)');if(!(l>0))return er('จำนวนลิตรต้องมากกว่า 0');if(!(p>0))return er('ราคาน้ำมันต้องมากกว่า 0');if(!(o>0))return er('กรอกเลขไมล์');
  if(D.fuel.some(x=>x.id!==id&&(x.odo===o||(x.odo<o&&x.date>d)||(x.odo>o&&x.date<d))))return er('เลขไมล์ไม่สอดคล้องกับรายการอื่น (ซ้ำ หรือขัดกับลำดับวันที่)');
  const r={id:id||uid(),date:d,odo:o,liters:l,price:p,total:+$gt.value||Math.round(l*p*100)/100,station:$gst.value,notes:$gn.value};D.fuel=id?D.fuel.map(x=>x.id===id?r:x):[...D.fuel,r];save();closeSheet()}
 /* ----- Backup / migrate ----- */
@@ -239,6 +242,15 @@ function bkImport(){let j;try{j=JSON.parse($bki.value)}catch(e){$err.textContent
  if(!j||!Array.isArray(j.orders)||!j.s){$err.textContent='ไม่ใช่ไฟล์ข้อมูลของแอปนี้';return}
  if(!confirm('แทนที่ข้อมูลปัจจุบันด้วยข้อมูลที่นำเข้า ('+j.orders.length+' งาน)?'))return;
  D={...j,expenses:j.expenses||[],fuel:j.fuel||[]};save();closeSheet()}
+/* ----- Input helpers ----- */
+const dmy=s=>s?s.split('-').reverse().join('/'):'';
+const dinp=(id,iso)=>`<input id="${id}" type="text" inputmode="numeric" placeholder="วว/ดด/ปปปป" maxlength="10" value="${dmy(iso)}" oninput="dfmt(this)">`;
+function dfmt(el){const d=el.value.replace(/\D/g,'').slice(0,8);el.value=[d.slice(0,2),d.slice(2,4),d.slice(4)].filter(Boolean).join('/')}
+function rd(id){const v=document.getElementById(id).value.trim();if(!v)return today();const m=/^(\d{2})\/(\d{2})\/(\d{4})$/.exec(v);if(!m)return null;const[,d,mo,y]=m,t=new Date(+y,mo-1,+d);return t.getFullYear()==y&&t.getMonth()==mo-1&&t.getDate()==+d?y+'-'+mo+'-'+d:null}
+function tin(el){const d=el.value.replace(/\D/g,'').slice(0,4);el.value=d.length===4?d.slice(0,2)+':'+d.slice(2):d}
+function tfix(el){let d=el.value.replace(/\D/g,'');if(!d){el.value='';return upd()}if(d.length<=2)d=d.padStart(2,'0')+'00';else if(d.length===3)d='0'+d;el.value=d.slice(0,2)+':'+d.slice(2,4);upd()}
+const STATIONS=['PTT Station','Bangchak','PT Station','Shell','Caltex','Susco'];
+const stSel=v=>{const l=v&&!STATIONS.includes(v)?[...STATIONS,v]:STATIONS;return `<select id="gst"><option value="">— เลือกปั๊ม —</option>${l.map(x=>`<option ${x===v?'selected':''}>${x}</option>`).join('')}</select>`};
 /* ----- Settings ----- */
 function settings(){const s=D.s,c=S();
  const fld=(k,l,t)=>`<div><label>${l}</label><input data-k="${k}" type="${t||'text'}" ${t==='number'?'inputmode="decimal" step="any"':''} value="${s[k]}"></div>`;
@@ -250,10 +262,11 @@ function settings(){const s=D.s,c=S();
  <h2>เกณฑ์ “งานนี้คุ้มไหม” (กำไร ฿/กม.)</h2><div class="card two">${fld('thG','🟢 คุ้ม ตั้งแต่','number')}${fld('thY','🟡 พอรับได้ ตั้งแต่','number')}</div>
  <h2>ตัวเลือก (คั่นด้วย ,)</h2><div class="card">${fld('types','ประเภทบริการ')}${fld('rates','Commission %')}</div>
  <button class="fab" onclick="saveSet()">บันทึกการตั้งค่า</button><button class="ghost" style="margin-bottom:8px" onclick="openBackup()">สำรอง / ย้ายข้อมูล (ส่งออก-นำเข้า)</button><button class="ghost danger" style="margin-bottom:8px" onclick="if(confirm('ลบงาน ค่าใช้จ่าย และบันทึกน้ำมันทั้งหมด เพื่อเริ่มใช้ข้อมูลจริง? (การตั้งค่ารถยังอยู่)')){D.orders=[];D.expenses=[];D.fuel=[];save();render()}">ล้างข้อมูลตัวอย่าง / เริ่มข้อมูลจริง</button><button class="ghost" onclick="if(confirm('รีเซ็ตเป็นข้อมูลตัวอย่าง?')){D=seed();save();render()}">รีเซ็ตเป็นข้อมูลตัวอย่าง</button>
- <div class="row" style="margin-top:14px"><span class="l">ธีม</span><div class="seg" style="flex:none">${['auto','light','dark'].map(t=>`<button onclick="theme('${t}')">${{auto:'อัตโนมัติ',light:'สว่าง',dark:'มืด'}[t]}</button>`).join('')}</div></div>`}
+ <h2>ธีม</h2><div class="card"><div class="seg">${['auto','light','dark'].map(t=>`<button class="${themeNow()===t?'on':''}" onclick="theme('${t}')">${{auto:'🌓 อัตโนมัติ',light:'☀️ สว่าง',dark:'🌙 มืด'}[t]}</button>`).join('')}</div></div>`}
 function saveSet(){document.querySelectorAll('[data-k]').forEach(e=>{const k=e.dataset.k;D.s[k]=e.type==='checkbox'?e.checked:e.type==='number'?(+e.value||0):e.value});
  if(D.s.kmpl<=0||D.s.fuelPrice<=0){alert('กม./ลิตร และราคาน้ำมันต้องมากกว่า 0');D.s.kmpl=D.s.kmpl>0?D.s.kmpl:10;D.s.fuelPrice=D.s.fuelPrice>0?D.s.fuelPrice:40}save();render()}
-function theme(t){if(t==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.dataset.theme=t}
+function theme(t){if(t==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.dataset.theme=t;try{localStorage.setItem('lm_theme',t)}catch(e){}render(true)}
+const themeNow=()=>{try{return localStorage.getItem('lm_theme')||'auto'}catch(e){return'auto'}};
 const $app=document.getElementById('app'),$nav=document.getElementById('nav'),$sheet=document.getElementById('sheet'),$sheetc=document.getElementById('sheetc');
 new Proxy({},{});['ftype','frate','fcustom','fgross','fkm','fdp','fdd','fdr','prev','fstart','fend','ftoll','fpark','foth','err','fdate','foid','farea','fpick','fdrop','fnotes','ecat','eamt','edate','ecount','gdate','godo','gl','gp','gt','gst','gn','bk','bki','bkf'].forEach(id=>Object.defineProperty(window,'$'+id,{get:()=>document.getElementById(id)}));
 render();initDrive();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
