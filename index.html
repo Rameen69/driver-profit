@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="th"><head><meta charset="utf-8">
-<link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-title" content="กำไรคนขับ"><meta name="theme-color" content="#f26a1b"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="config.js"></script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-title" content="กำไรคนขับ"><meta name="theme-color" content="#f26a1b"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Driver Profit Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
@@ -75,13 +75,13 @@ function seed(){
   for(let i=0;i<n;i++){const ty=Math.floor(rnd()*3),km=Math.round(6+rnd()*28),g=Math.round((60+km*(7+ty*2.5)+rnd()*60)/5)*5,dp=Math.round(2+rnd()*8),dr=Math.round(rnd()*10),dur=Math.round((km+dp+dr)*2.4+18),a=areas[Math.floor(rnd()*6)];
    const f=m=>String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
    o.push({id:uid(),date:day,start:f(t),end:f(t+dur),oid:'LM'+Math.floor(1000+rnd()*8999),type:types[ty],gross:g,rate:rates[Math.floor(rnd()*5)],km:km+dp+dr,dPick:dp,dDel:km,dRet:dr,toll:rnd()>.8?50:0,parking:0,other:0,pickup:a,drop:areas[Math.floor(rnd()*6)],area:a,notes:''});t+=dur+20+Math.floor(rnd()*70)}}
- return{fuel:[[-21,125000,50],[-14,125420,52],[-7,125850,53],[-1,126270,52]].map(([d,odo,l])=>({id:uid(),date:addDays(ymd(new Date()),d),odo,liters:l,price:40.5,total:Math.round(l*40.5*100)/100,station:'PTT Station',notes:''})),orders:o,expenses:[{id:uid(),date:ymd(new Date()),cat:'ล้างรถ',amount:80,count:true,notes:''},{id:uid(),date:ymd(new Date()),cat:'อาหาร',amount:60,count:false,notes:''}],
- s:{brand:'Toyota',model:'Hilux Vigo',year:2012,plate:'1กข 1234',fuelType:'ดีเซล',kmpl:10,fuelPrice:40,carValue:600000,lifeKm:300000,useDep:true,sticker:'ยังไม่ได้ติด',goalDayP:1000,goalWeekP:6000,goalMonthP:25000,thG:8,thY:4,types:'ประหยัด,ปกติ,เร่งด่วน',rates:'25,17,7',lastRate:25,lastType:'ปกติ'}}}
+ return{fuel:[[-21,125000,50],[-14,125420,52],[-7,125850,53],[-1,126270,52]].map(([d,odo,l])=>({id:uid(),date:addDays(ymd(new Date()),d),odo,liters:l,price:40.5,total:Math.round(l*40.5*100)/100,station:'PTT Station',ftype:'ดีเซล B7',notes:''})),orders:o,expenses:[{id:uid(),date:ymd(new Date()),cat:'ล้างรถ',amount:80,count:true,notes:''},{id:uid(),date:ymd(new Date()),cat:'อาหาร',amount:60,count:false,notes:''}],
+ s:{brand:'Toyota',model:'Hilux Vigo',year:2012,plate:'1กข 1234',fuelType:'ดีเซล B7',kmpl:10,fuelPrice:40,carValue:600000,lifeKm:300000,useDep:true,sticker:'ยังไม่ได้ติด',goalDayP:1000,goalWeekP:6000,goalMonthP:25000,thG:8,thY:4,types:'ประหยัด,ปกติ,เร่งด่วน',rates:'25,17,7',lastRate:25,lastType:'ปกติ'}}}
 let D;try{D=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!D||!D.orders)D=seed();
 if(!D.fuel)D.fuel=[];
 const saveLocal=()=>{try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}};
 /* ===== Google Drive sync (data lives in your own Drive; local copy = offline cache) ===== */
-const GOOGLE_CLIENT_ID='1093198523049-681os78pv61slfdkoaionpqa6eu2h8na.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID=(window.APP_CONFIG&&window.APP_CONFIG.clientId)||'PASTE_YOUR_CLIENT_ID.apps.googleusercontent.com';
 const FNAME='LalamoveProfit-data.json',SCOPE='https://www.googleapis.com/auth/drive.file';
 let TOK=null,tokenClient=null,fileId=null,pend=null,dirty=false,connected=false;
 const setSync=t=>{const e=document.getElementById('sync');if(e)e.textContent={off:'📱 ยังไม่เชื่อม Drive · แตะเพื่อเชื่อม',busy:'☁️ กำลังซิงค์…',ok:'☁️ Drive ซิงค์แล้ว',err:'⚠️ ซิงค์ไม่สำเร็จ · แตะลองใหม่'}[t]};
@@ -214,21 +214,21 @@ function fuelPage(sw){const st=Calc.fuelStats(D.fuel),l=D.fuel.slice().sort((a,b
  return`<h1>รายการ</h1>${sw}<button class="fab" style="margin-top:0" onclick="openFuel()">+ เติมน้ำมัน</button>
  <div class="card"><div class="row"><span class="l">ราคาน้ำมันเฉลี่ย</span><b>${f1(st.avgPrice)} ฿/ลิตร</b></div><div class="row"><span class="l">อัตราสิ้นเปลืองจริง</span><b>${st.kmpl?f1(st.kmpl)+' กม./ลิตร':'-'}</b></div><div class="row"><span class="l">ต้นทุนน้ำมันจริง</span><b>${st.bkm?f1(st.bkm)+' ฿/กม.':'-'}</b></div><div class="row"><span class="l">ค่าที่ใช้คำนวณตอนนี้</span><span>${f1(D.s.kmpl)} กม./ลิตร · ${f1(D.s.fuelPrice)} ฿/ลิตร</span></div>
  ${st.kmpl?`<button class="ghost" style="margin-top:8px" onclick="useFuel(${st.kmpl},${st.avgPrice})">ใช้ค่าจริงเป็นต้นทุนน้ำมัน</button>`:'<small style="color:var(--mut)">บันทึกการเติมอย่างน้อย 2 ครั้ง (เติมเต็มถัง) เพื่อคำนวณ กม./ลิตรจริง</small>'}</div>
- <div class="card" style="padding:0">${l.length?l.map(e=>{const g=st.legs.find(x=>x.id===e.id);return`<div class="item" onclick="openFuel('${e.id}')"><div><b>${thDate(e.date)} · ${f1(e.liters)} ลิตร</b><small>ไมล์ ${f0(e.odo)} · ${f1(e.price)} ฿/ลิตร${e.station?' · '+e.station:''}${g?` · ${f1(g.kmpl)} กม./ล. · ${f1(g.bkm)} ฿/กม.`:''}</small></div><b>${f0(e.total)}</b></div>`}).join(''):'<div class="empty">ยังไม่มีบันทึกการเติมน้ำมัน</div>'}</div>
+ <div class="card" style="padding:0">${l.length?l.map(e=>{const g=st.legs.find(x=>x.id===e.id);return`<div class="item" onclick="openFuel('${e.id}')"><div><b>${thDate(e.date)} · ${f1(e.liters)} ลิตร</b><small>ไมล์ ${f0(e.odo)} · ${f1(e.price)} ฿/ลิตร${e.ftype?' · '+e.ftype:''}${e.station?' · '+e.station:''}${g?` · ${f1(g.kmpl)} กม./ล. · ${f1(g.bkm)} ฿/กม.`:''}</small></div><b>${f0(e.total)}</b></div>`}).join(''):'<div class="empty">ยังไม่มีบันทึกการเติมน้ำมัน</div>'}</div>
  <small style="color:var(--mut)">ค่าน้ำมันในหน้านี้ไม่ถูกนับซ้ำเป็นค่าใช้จ่าย เพราะกำไรแต่ละงานคิดน้ำมันจากระยะทาง × ฿/กม. อยู่แล้ว</small>`}
 function useFuel(k,p){if(!confirm('ปรับ กม./ลิตร และราคาน้ำมันในการตั้งค่า? ผลคำนวณกำไรของงานทั้งหมดจะเปลี่ยนตาม'))return;D.s.kmpl=Math.round(k*100)/100;D.s.fuelPrice=Math.round(p*100)/100;save();render()}
-function openFuel(id){const e=D.fuel.find(x=>x.id===id)||{date:today(),odo:Math.max(0,...D.fuel.map(x=>x.odo)),liters:'',price:D.s.fuelPrice,total:'',station:'',notes:''};
+function openFuel(id){const e=D.fuel.find(x=>x.id===id)||{date:today(),odo:Math.max(0,...D.fuel.map(x=>x.odo)),liters:'',price:D.s.fuelPrice,total:'',station:'',notes:'',ftype:(D.fuel.slice().sort((a,b)=>b.odo-a.odo)[0]||{}).ftype||D.s.fuelType};
  openSheet(`<div class="row"><button class="ghost" style="width:auto" onclick="closeSheet()">‹ กลับ</button><b>${id?'แก้ไข':'เพิ่ม'}การเติมน้ำมัน</b><span></span></div>
  <div class="two"><div><label>วันที่</label>${dinp('gdate',e.date)}</div><div><label>เลขไมล์ (กม.)</label><input id="godo" type="number" inputmode="decimal" min="0" value="${e.odo||''}"></div>
  <div><label>จำนวนลิตร</label><input id="gl" type="number" inputmode="decimal" min="0" step="any" value="${e.liters}" oninput="fcalc('l')"></div><div><label>ราคา ฿/ลิตร</label><input id="gp" type="number" inputmode="decimal" min="0" step="any" value="${e.price}" oninput="fcalc('p')"></div></div>
  <label>จำนวนเงิน (฿) · กรอกยอดรวมแทนราคา/ลิตรก็ได้</label><input id="gt" type="number" inputmode="decimal" min="0" step="any" value="${e.total}" oninput="fcalc('t')">
- <label>ปั๊มน้ำมัน</label>${stSel(e.station)}<label>หมายเหตุ</label><input id="gn" value="${e.notes}">
+ <label>ชนิดน้ำมัน</label><select id="gft">${fuelOpts(e.ftype)}</select><label>ปั๊มน้ำมัน</label>${stSel(e.station)}<label>หมายเหตุ</label><input id="gn" value="${e.notes}">
  <small style="color:var(--mut);display:block;margin-top:8px">เติมให้เต็มถังทุกครั้ง เพื่อให้ กม./ลิตร แม่นยำ</small><div id="err" class="neg"></div><button class="fab" onclick="saveFuel('${id||''}')">บันทึก</button>${id?`<button class="ghost danger" onclick="D.fuel=D.fuel.filter(x=>x.id!=='${id}');save();closeSheet()">ลบ</button>`:''}`)}
 function fcalc(w){const l=+$gl.value||0,p=+$gp.value||0,t=+$gt.value||0;if(w==='t'){if(l>0)$gp.value=Math.round(t/l*100)/100}else if(p>0&&l>0)$gt.value=Math.round(l*p*100)/100}
 function saveFuel(id){const l=+$gl.value,p=+$gp.value,o=+$godo.value,d=rd('gdate'),er=m=>{$err.textContent=m};
  if(d===null)return er('วันที่ไม่ถูกต้อง (วว/ดด/ปปปป)');if(!(l>0))return er('จำนวนลิตรต้องมากกว่า 0');if(!(p>0))return er('ราคาน้ำมันต้องมากกว่า 0');if(!(o>0))return er('กรอกเลขไมล์');
  if(D.fuel.some(x=>x.id!==id&&(x.odo===o||(x.odo<o&&x.date>d)||(x.odo>o&&x.date<d))))return er('เลขไมล์ไม่สอดคล้องกับรายการอื่น (ซ้ำ หรือขัดกับลำดับวันที่)');
- const r={id:id||uid(),date:d,odo:o,liters:l,price:p,total:+$gt.value||Math.round(l*p*100)/100,station:$gst.value,notes:$gn.value};D.fuel=id?D.fuel.map(x=>x.id===id?r:x):[...D.fuel,r];save();closeSheet()}
+ const r={id:id||uid(),date:d,odo:o,liters:l,price:p,total:+$gt.value||Math.round(l*p*100)/100,station:$gst.value,notes:$gn.value,ftype:$gft.value};D.fuel=id?D.fuel.map(x=>x.id===id?r:x):[...D.fuel,r];save();closeSheet()}
 /* ----- Backup / migrate ----- */
 function openBackup(){openSheet(`<div class="row"><button class="ghost" style="width:auto" onclick="closeSheet()">‹ กลับ</button><b>สำรอง / ย้ายข้อมูล</b><span></span></div>
  <label>ส่งออก: คัดลอกข้อความนี้ไปเก็บ หรือไปวางในอีกเวอร์ชันหนึ่ง</label><textarea id="bk" rows="6" readonly onclick="this.select()">${JSON.stringify(D).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</textarea>
@@ -249,12 +249,14 @@ function dfmt(el){const d=el.value.replace(/\D/g,'').slice(0,8);el.value=[d.slic
 function rd(id){const v=document.getElementById(id).value.trim();if(!v)return today();const m=/^(\d{2})\/(\d{2})\/(\d{4})$/.exec(v);if(!m)return null;const[,d,mo,y]=m,t=new Date(+y,mo-1,+d);return t.getFullYear()==y&&t.getMonth()==mo-1&&t.getDate()==+d?y+'-'+mo+'-'+d:null}
 function tin(el){const d=el.value.replace(/\D/g,'').slice(0,4);el.value=d.length===4?d.slice(0,2)+':'+d.slice(2):d}
 function tfix(el){let d=el.value.replace(/\D/g,'');if(!d){el.value='';return upd()}if(d.length<=2)d=d.padStart(2,'0')+'00';else if(d.length===3)d='0'+d;el.value=d.slice(0,2)+':'+d.slice(2,4);upd()}
+const FUELS=[['เบนซิน',['เบนซิน 95','แก๊สโซฮอล์ 91','แก๊สโซฮอล์ 95','แก๊สโซฮอล์ E20','แก๊สโซฮอล์ E85']],['ดีเซล',['ดีเซล B7','ดีเซล B20']]];
+const fuelOpts=v=>{const all=FUELS.flatMap(g=>g[1]);return(v&&!all.includes(v)?`<option selected>${v}</option>`:'')+FUELS.map(([g,l])=>`<optgroup label="${g}">${l.map(x=>`<option ${x===v?'selected':''}>${x}</option>`).join('')}</optgroup>`).join('')};
 const STATIONS=['PTT Station','Bangchak','PT Station','Shell','Caltex','Susco'];
 const stSel=v=>{const l=v&&!STATIONS.includes(v)?[...STATIONS,v]:STATIONS;return `<select id="gst"><option value="">— เลือกปั๊ม —</option>${l.map(x=>`<option ${x===v?'selected':''}>${x}</option>`).join('')}</select>`};
 /* ----- Settings ----- */
 function settings(){const s=D.s,c=S();
  const fld=(k,l,t)=>`<div><label>${l}</label><input data-k="${k}" type="${t||'text'}" ${t==='number'?'inputmode="decimal" step="any"':''} value="${s[k]}"></div>`;
- return`<h1>ตั้งค่า</h1><div class="card"><div class="row"><span class="l">Google Drive</span><b>${connected?'เชื่อมต่อแล้ว':'ยังไม่เชื่อมต่อ'}</b></div><button class="ghost" onclick="syncClick()">${connected?'ซิงค์เดี๋ยวนี้':'เชื่อมต่อ Google Drive'}</button><button class="ghost" style="margin-top:6px" onclick="location.href=authUrl()">เชื่อมต่อแบบเปลี่ยนหน้า (ถ้าปุ่มปกติไม่ทำงานบน iPhone)</button><small style="color:var(--mut);display:block;margin-top:6px">ข้อมูลเก็บในไฟล์ ${FNAME} ใน My Drive ของคุณ</small></div><h2>รถ</h2><div class="card"><div class="two">${fld('brand','ยี่ห้อ')}${fld('model','รุ่น')}${fld('year','ปี','number')}${fld('plate','ทะเบียน')}${fld('fuelType','เชื้อเพลิง')}${fld('kmpl','กม./ลิตร','number')}${fld('fuelPrice','ราคาน้ำมัน ฿/ลิตร','number')}${fld('carValue','มูลค่ารถ ฿','number')}${fld('lifeKm','ระยะที่คาดว่าใช้งาน (กม.)','number')}
+ return`<h1>ตั้งค่า</h1><div class="card"><div class="row"><span class="l">Google Drive</span><b>${connected?'เชื่อมต่อแล้ว':'ยังไม่เชื่อมต่อ'}</b></div><button class="ghost" onclick="syncClick()">${connected?'ซิงค์เดี๋ยวนี้':'เชื่อมต่อ Google Drive'}</button><button class="ghost" style="margin-top:6px" onclick="location.href=authUrl()">เชื่อมต่อแบบเปลี่ยนหน้า (ถ้าปุ่มปกติไม่ทำงานบน iPhone)</button><small style="color:var(--mut);display:block;margin-top:6px">ข้อมูลเก็บในไฟล์ ${FNAME} ใน My Drive ของคุณ</small></div><h2>รถ</h2><div class="card"><div class="two">${fld('brand','ยี่ห้อ')}${fld('model','รุ่น')}${fld('year','ปี','number')}${fld('plate','ทะเบียน')}<div><label>เชื้อเพลิง</label><select data-k="fuelType">${fuelOpts(s.fuelType)}</select></div>${fld('kmpl','กม./ลิตร','number')}${fld('fuelPrice','ราคาน้ำมัน ฿/ลิตร','number')}${fld('carValue','มูลค่ารถ ฿','number')}${fld('lifeKm','ระยะที่คาดว่าใช้งาน (กม.)','number')}
  <div><label>สถานะสติ๊กเกอร์</label><select data-k="sticker">${['ยังไม่ได้ติด','ติดแล้ว'].map(x=>`<option ${s.sticker===x?'selected':''}>${x}</option>`).join('')}</select></div></div>
  <div class="row" style="margin-top:8px"><span class="l">ต้นทุนน้ำมัน</span><b>${f1(c.fuelPerKm)} ฿/กม.</b></div><div class="row"><span class="l">ค่าเสื่อม</span><b>${f1(c.depPerKm)} ฿/กม.</b></div>
  <label style="display:flex;gap:10px;align-items:center;color:var(--ink)"><input data-k="useDep" type="checkbox" style="width:24px;height:24px" ${s.useDep?'checked':''}>คิดค่าเสื่อมในการคำนวณ</label></div>
@@ -268,6 +270,6 @@ function saveSet(){document.querySelectorAll('[data-k]').forEach(e=>{const k=e.d
 function theme(t){if(t==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.dataset.theme=t;try{localStorage.setItem('lm_theme',t)}catch(e){}render(true)}
 const themeNow=()=>{try{return localStorage.getItem('lm_theme')||'auto'}catch(e){return'auto'}};
 const $app=document.getElementById('app'),$nav=document.getElementById('nav'),$sheet=document.getElementById('sheet'),$sheetc=document.getElementById('sheetc');
-new Proxy({},{});['ftype','frate','fcustom','fgross','fkm','fdp','fdd','fdr','prev','fstart','fend','ftoll','fpark','foth','err','fdate','foid','farea','fpick','fdrop','fnotes','ecat','eamt','edate','ecount','gdate','godo','gl','gp','gt','gst','gn','bk','bki','bkf'].forEach(id=>Object.defineProperty(window,'$'+id,{get:()=>document.getElementById(id)}));
+new Proxy({},{});['ftype','frate','fcustom','fgross','fkm','fdp','fdd','fdr','prev','fstart','fend','ftoll','fpark','foth','err','fdate','foid','farea','fpick','fdrop','fnotes','ecat','eamt','edate','ecount','gdate','godo','gl','gp','gt','gst','gn','gft','bk','bki','bkf'].forEach(id=>Object.defineProperty(window,'$'+id,{get:()=>document.getElementById(id)}));
 render();initDrive();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script></body></html>
