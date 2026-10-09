@@ -81,7 +81,7 @@ let D;try{D=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!D||!D.orders)D=s
 if(!D.fuel)D.fuel=[];
 const saveLocal=()=>{try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}};
 /* ===== Google Drive sync (data lives in your own Drive; local copy = offline cache) ===== */
-const GOOGLE_CLIENT_ID=(window.APP_CONFIG&&window.APP_CONFIG.clientId)||'PASTE_YOUR_CLIENT_ID.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID=(window.APP_CONFIG&&window.APP_CONFIG.clientId)||'1093198523049-681os78pv61slfdkoaionpqa6eu2h8na.apps.googleusercontent.com';
 const FNAME='LalamoveProfit-data.json',SCOPE='https://www.googleapis.com/auth/drive.file';
 let TOK=null,tokenClient=null,fileId=null,pend=null,dirty=false,connected=false;
 const setSync=t=>{const e=document.getElementById('sync');if(e)e.textContent={off:'📱 ยังไม่เชื่อม Drive · แตะเพื่อเชื่อม',busy:'☁️ กำลังซิงค์…',ok:'☁️ Drive ซิงค์แล้ว',err:'⚠️ ซิงค์ไม่สำเร็จ · แตะลองใหม่'}[t]};
